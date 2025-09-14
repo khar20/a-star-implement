@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementación de A*</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .results-column {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            color: #1a252f;
+        }
+
+        .grid-container {
+            display: grid;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .cell {
+            width: 18px;
+            height: 18px;
+            border: 1px solid #eee;
+        }
+
+        .wall {
+            background-color: #333;
+        }
+
+        .start {
+            background-color: #28a745;
+        }
+
+        .goal {
+            background-color: #dc3545;
+        }
+
+        .path {
+            background-color: #ffc107;
+        }
+
+        #controls {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #train-find-path-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+
+        #train-find-path-btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        #loader {
+            display: none;
+            margin-top: 10px;
+            color: #007bff;
+        }
+
+        .stats {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            text-align: left;
+        }
+
+        .stats li {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stats li:last-child {
+            border-bottom: none;
+        }
+
+        .stats span {
+            font-weight: bold;
+        }
+        
+        /* --- ESTILO PARA LAS INSTRUCCIONES --- */
+        .instructions-box {
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 10px 20px;
+            margin: 0 auto 20px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+        .instructions-box h3 {
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .instructions-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Implementación de A*</h1>
+
+    <!-- --- DIV DE INSTRUCCIONES AÑADIDO --- -->
+    <div class="instructions-box">
+        <h3>Instrucciones</h3>
+        <ul>
+            <li>1. Haz clic y arrastra el mouse sobre la cuadrícula "Laberinto" para dibujar obstáculos.</li>
+            <li>2. Presiona el botón "Buscar Ruta" para iniciar la comparación.</li>
+        </ul>
+    </div>
+
+    <div class="main-container">
+        <div class="column results-column">
+            <h2>Modelo entrenado</h2>
+            <div id="dl-grid-container" class="grid-container"></div>
+            <ul class="stats">
+                <li>Nodos Expandidos: <span id="dl-nodes-expanded">N/D</span></li>
+                <li>Longitud de Ruta: <span id="dl-length">N/D</span></li>
+                <li>Tiempo: <span id="dl-time">N/D</span></li>
+            </ul>
+        </div>
+
+        <div class="column">
+            <h2>Laberinto</h2>
+            <div id="design-grid-container" class="grid-container"></div>
+            <div id="controls">
+                <button id="train-find-path-btn">Buscar Ruta</button>
+                <div id="loader">Entrenando modelo...</div>
+            </div>
+        </div>
+
+        <div class="column results-column">
+            <h2>Distancia Manhattan</h2>
+            <div id="manhattan-grid-container" class="grid-container"></div>
+            <ul class="stats">
+                <li>Nodos Expandidos: <span id="manhattan-nodes-expanded">N/D</span></li>
+                <li>Longitud de Ruta: <span id="manhattan-length">N/D</span></li>
+                <li>Tiempo: <span id="manhattan-time">N/D</span></li>
+            </ul>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

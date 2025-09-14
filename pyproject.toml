@@ -1,0 +1,15 @@
+[project]
+name = "a-star-implement"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.1.2",
+    "matplotlib>=3.10.6",
+    "numpy>=2.3.3",
+    "pandas>=2.3.2",
+    "sentence-transformers>=5.1.0",
+    "torch>=2.8.0",
+    "torch-geometric>=2.6.1",
+]
